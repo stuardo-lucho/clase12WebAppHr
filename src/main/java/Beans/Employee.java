@@ -13,7 +13,7 @@ public class Employee {
     private Job job;
     private BigDecimal salary;
     private BigDecimal commissionPct;
-    private int managerId;
+    private Employee manager;
     private int departmentId;
 
     /**
@@ -129,20 +129,6 @@ public class Employee {
     }
 
     /**
-     * @return the managerId
-     */
-    public int getManagerId() {
-        return managerId;
-    }
-
-    /**
-     * @param managerId the managerId to set
-     */
-    public void setManagerId(int managerId) {
-        this.managerId = managerId;
-    }
-
-    /**
      * @return the departmentId
      */
     public int getDepartmentId() {
@@ -162,5 +148,13 @@ public class Employee {
 
     public void setJob(Job job) {
         this.job = job;
+    }
+
+    public Employee getManager() {
+        return manager;
+    }
+
+    public void setManager(Employee manager) {
+        this.manager = manager;
     }
 }

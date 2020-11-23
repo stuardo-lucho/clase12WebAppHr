@@ -106,7 +106,9 @@ public class EmployeeServlet extends HttpServlet {
                 employee.setJob(job);
                 employee.setSalary(new BigDecimal(request.getParameter("salary")));
                 employee.setCommissionPct(request.getParameter("commission").equals("") ? null : new BigDecimal(request.getParameter("commission")));
-                employee.setManagerId(Integer.parseInt(request.getParameter("manager_id")));
+                Employee manager = new Employee();
+                manager.setEmployeeId(Integer.parseInt(request.getParameter("manager_id")));
+                employee.setManager(manager);
                 employee.setDepartmentId(Integer.parseInt(request.getParameter("department_id")));
                 employeeDao.guardarEmpleado(employee);
 
@@ -125,7 +127,9 @@ public class EmployeeServlet extends HttpServlet {
                 employee.setJob(jjob);
                 employee.setSalary(new BigDecimal(request.getParameter("salary")));
                 employee.setCommissionPct(request.getParameter("commission").equals("") ? null : new BigDecimal(request.getParameter("commission")));
-                employee.setManagerId(Integer.parseInt(request.getParameter("manager_id")));
+                Employee manager2 = new Employee();
+                manager2.setEmployeeId(Integer.parseInt(request.getParameter("manager_id")));
+                employee.setManager(manager2);
                 employee.setDepartmentId(Integer.parseInt(request.getParameter("department_id")));
                 employeeDao.actualizarEmpleado(employee);
 

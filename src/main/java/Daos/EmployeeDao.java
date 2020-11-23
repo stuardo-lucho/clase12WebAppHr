@@ -11,10 +11,14 @@ public class EmployeeDao extends BaseDao {
     public ArrayList<Employee> listarEmpleados() {
 
         ArrayList<Employee> listaEmpleados = new ArrayList<>();
+        String sql = "SELECT * FROM employees e\n" +
+                "inner join jobs j on e.job_id = j.job_id\n" +
+                "left join employees m on e.manager_id=m.employee_id\n" +
+                "order by e.employee_id;";
 
         try (Connection conn = getConnectionMysql();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM employees e inner join jobs j on e.job_id = j.job_id order by employee_id;");) {
+             ResultSet rs = stmt.executeQuery(sql);) {
 
             while (rs.next()) {
                 Employee employee = new Employee();
@@ -32,7 +36,11 @@ public class EmployeeDao extends BaseDao {
 
                 employee.setSalary(rs.getBigDecimal(8));
                 employee.setCommissionPct(rs.getBigDecimal(9));
-                employee.setManagerId(rs.getInt(10));
+                Employee manager = new Employee();
+                manager.setEmployeeId(rs.getInt(16));
+                manager.setFirstName(rs.getString(17));
+                manager.setLastName(rs.getString(18));
+                employee.setManager(manager);
                 employee.setDepartmentId(rs.getInt(11));
 
                 listaEmpleados.add(employee);
@@ -72,7 +80,9 @@ public class EmployeeDao extends BaseDao {
                     employee.setJob(job);
                     employee.setSalary(rs.getBigDecimal(8));
                     employee.setCommissionPct(rs.getBigDecimal(9));
-                    employee.setManagerId(rs.getInt(10));
+                    Employee manager = new Employee();
+                    manager.setEmployeeId(rs.getInt(10));
+                    employee.setManager(manager);
                     employee.setDepartmentId(rs.getInt(11));
                 }
             }
@@ -105,10 +115,10 @@ public class EmployeeDao extends BaseDao {
                 pstmt.setBigDecimal(8, employee.getCommissionPct());
             }
 
-            if (employee.getManagerId() == -1) {
+            if (employee.getManager().getEmployeeId() == -1) {
                 pstmt.setNull(9, Types.INTEGER);
             } else {
-                pstmt.setInt(9, employee.getManagerId());
+                pstmt.setInt(9, employee.getManager().getEmployeeId());
             }
 
             pstmt.setInt(10, employee.getDepartmentId());
@@ -150,7 +160,7 @@ public class EmployeeDao extends BaseDao {
             } else {
                 pstmt.setBigDecimal(8, employee.getCommissionPct());
             }
-            pstmt.setInt(9, employee.getManagerId());
+            pstmt.setInt(9, employee.getManager().getEmployeeId());
             pstmt.setInt(10, employee.getDepartmentId());
             pstmt.setInt(11, employee.getEmployeeId());
 

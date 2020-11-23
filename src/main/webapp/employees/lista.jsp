@@ -1,7 +1,7 @@
 <%@page import="Beans.Employee"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="listaEmpleados" type="ArrayList<Employee>" scope="request" />
+<jsp:useBean id="listaEmpleados" type="java.util.ArrayList<Beans.Employee>" scope="request" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -46,7 +46,7 @@
                         <td><%= e.getJob().getJobTitle()%></td>
                         <td><%= e.getSalary()%></td>
                         <td><%= e.getCommissionPct() == null ? "Sin comisión" : e.getCommissionPct()%></td>
-                        <td><%= e.getManagerId() == 0 ? "Sin jefe" : e.getManagerId()%></td>
+                        <td><%=e.getManager().getEmployeeId()==0?"Sin jefe":e.getManager().getFirstName()+" "+e.getManager().getLastName()%></td>
                         <td><%= e.getDepartmentId()%></td>
                         <td><a href="EmployeeServlet?action=editar&id=<%= e.getEmployeeId()%>">Editar</a></td>
                         <td><a href="EmployeeServlet?action=borrar&id=<%= e.getEmployeeId()%>">Borrar</a></td>
