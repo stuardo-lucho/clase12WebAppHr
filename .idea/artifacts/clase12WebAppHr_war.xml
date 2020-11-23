@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="clase12WebAppHr:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>clase12WebAppHr</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="clase12WebAppHr-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="clase12WebAppHr:war exploded" />
+    </root>
+  </artifact>
+</component>
